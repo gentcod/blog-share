@@ -4,7 +4,14 @@ export interface IBlog extends Document {
    author: Types.ObjectId;
    title: string;
    post: string;
+   // tags?: string[];
+   // comments?: IComment[];
 }
+
+// export interface IComment {
+//    userId: Types.ObjectId;
+//    comment: string;
+// }
 
 export interface IBlogPending extends IBlog {
    blogId?: Types.ObjectId;
@@ -22,6 +29,13 @@ export const blogSchema = new Schema<IBlog>(
       author: { type: Schema.Types.ObjectId, ref: 'Users', required: true },
       title: { type: String, required: true, },
       post: { type: String, required: true },
+      // tags: [{ type: String, required: true }],
+      // comments: [
+      //    {
+      //       userId: { type: Schema.Types.ObjectId, ref: 'Users', required: true },
+      //       comment: { type: String, required: true },
+      //    }
+      // ]
    },
    {
       timestamps: true,
@@ -49,3 +63,5 @@ export const blogPendingSchema = new Schema<IBlogPending>(
 export const BlogModel = mongoose.model<IBlog>('Blogs', blogSchema, 'blogs');
 
 export const BlogPendingModel = mongoose.model<IBlogPending>('BlogsPending', blogPendingSchema, 'blogsPending');
+
+// NB: Comments and Tags are left out to avoid over-engineering...
