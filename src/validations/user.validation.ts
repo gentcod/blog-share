@@ -6,7 +6,7 @@ export const SignUpValidation = Joi.object({
   username: Joi.string().trim().required(),
   firstName: Joi.string().trim().required(),
   lastName: Joi.string().trim().required(),
-  role: Joi.string().trim().required(),
+  role: Joi.string().trim().valid('user', 'employee').required(),
 });
 
 export const LoginValidation = Joi.object({
