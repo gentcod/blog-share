@@ -14,9 +14,10 @@ export class AdminServices {
          }
       }
 
-      const { searchString, pageSize, pageId } = searchParams;
+      const { searchString, filter, pageSize, pageId } = searchParams;
       const limit = pageSize && pageSize < 10 ? pageSize : 10;
       const firstIndex = (pageId - 1) * limit;
+      const status = BlogStatus[filter.toUpperCase() as keyof typeof BlogStatus]
 
       const [count, blogs] = await Promise.all([
          BlogPendingModel.countDocuments(
@@ -24,8 +25,9 @@ export class AdminServices {
          ),
 
          BlogPendingModel.find(
-            searchString ? { title: { $regex: searchString, $options: 'i' } } : {}
+            searchString ? { title: { $regex: searchString, $options: 'i' } } : {},
          )
+            .where(status ? { status: status } : {})
             .skip(firstIndex || 0)
             .limit(limit)
             .populate({

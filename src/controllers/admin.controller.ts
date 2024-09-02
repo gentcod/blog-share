@@ -8,11 +8,16 @@ export class AdminController {
    public async getAllPendingBlogs(req: Request, res: Response, next: NextFunction) {
       try {
          const { id } = (req as MiddlewareReq).authPayload;
-         const { pageId, pageSize, searchString } = req.query;
+         const { pageId, pageSize, search, status } = req.query;
          const size = Number(pageSize);
          const pageNum = Number(pageId);
          
-         const result = await new AdminServices().getAllPendingBlogs(id, {pageSize: size, pageId: pageNum, searchString: (searchString as string)});
+         const result = await new AdminServices().getAllPendingBlogs(id, {
+            pageSize: size, 
+            pageId: pageNum, 
+            searchString: (search as string),
+            filter: (status as string),
+         });
          return sendApiResponse(res, {
             status: result.status,
             message: result.message,
