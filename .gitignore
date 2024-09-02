@@ -2,5 +2,6 @@ node_modules
 dist
 ref.json
 config.dev.env
+config.prod.env
 docker-compose*
 ref.txt
