@@ -12,7 +12,7 @@ services:
     environment:
       NODE_ENV: production
     env_file:
-      - .config.prod.env
+      - ./config.prod.env
   proxy:
     restart: unless-stopped 
     build: 
